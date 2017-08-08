@@ -1,0 +1,43 @@
+
+
+//比较器，qsort()排序需要
+int compare(int *a, int *b){
+    return *a - *b;
+}
+
+//数组传入
+JNIEXPORT void JNICALL Java_com_wzw_jni02_JniTest_giveArray
+(JNIEnv *env, jobject jobj, jintArray jintArr){
+
+    //jintArray -> jint 指针 -> c int 数组
+    //JNI_TRUE  C另开辟内存， 和java操作不同的数组，内存(使用会出错，木知什么原因)
+    //NULL, JNI_FALSE C和java操作同一数组，同一块内存， 要改变java的数组需要同步（ ReleaseIntArrayElements（））
+    jint *elems = (*env)->GetIntArrayElements(env, jintArr, NULL);
+    //数组的长度
+    int len = (*env)->GetArrayLength(env, jintArr);
+    //排序
+    qsort(elems, len, sizeof(jint), compare);
+    //将排序的结果 同步到java
+    // 0: Java数组进行更新，并释放c/c++数组
+    // JNI_ABORT:  Java数组不进行更新，但释放c/c++数组
+    // JNI_COMMIT: Java数组进行更新，不释放c/c++数组（函数执行完，数组还是会释放）
+    (*env)->ReleaseIntArrayElements(env, jintArr, elems, 0);
+
+}
+
+//获得数组
+JNIEXPORT jintArray JNICALL Java_com_wzw_jni02_JniTest_getArray
+(JNIEnv *env, jobject jobj, jint len){
+
+    //创建一个指定大小的数组
+    jintArray jint_arr = (*env)-> NewIntArray(env, len);
+    jint *elems = (*env)->GetIntArrayElements(env, jint_arr, NULL);
+    int i = 0;
+    for (; i < len; i++) {
+        elems[i] = i;
+    }
+    //同步
+    (*env)->ReleaseIntArrayElements(env, jint_arr, elems, 0);
+
+    return jint_arr;
+}

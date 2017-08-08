@@ -1,0 +1,23 @@
+//缓存策略
+JNIEXPORT void JNICALL Java_com_wzw_jni02_JniTest_cached
+(JNIEnv *env, jobject jobj){
+    jclass jcls = (*env)->GetObjectClass(env, jobj);
+    //获取jfieldID只获取一次
+    //局部的静态变量，方法结束后，其值还存在内存中，但作用域还只是本方法内
+    static jfieldID key_id = NULL;
+    if (key_id == NULL) {
+        key_id = (*env)->GetFieldID(env, jcls, "key", "Ljava/lang/String;");
+        printf("--------------GetFeildId------------\n");
+    }
+
+}
+
+//初始化全局变量,动态库加载完成，立即缓存起来
+jfieldID key_fid ;
+jmethodID random_mid;
+JNIEXPORT void JNICALL Java_com_wzw_jni02_JniTest_initIds
+(JNIEnv *env, jclass jcls){
+   key_fid = (*env)->GetFieldID(env, jcls, "key", "Ljava/lang/String;");
+   random_mid = (*env)->GetMethodID(env, jcls, "getrandomInt", "(I)I");
+
+}

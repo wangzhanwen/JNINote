@@ -1,0 +1,59 @@
+JNI 引用变量
+    引用类型 ：局部引入和全局引入
+    作用： 在JNI中告知虚拟机何时回收一个JNI变量
+
+局部引用, 通过DeleLocalRef手动释放
+  1. 访问一个很大的java对象，使用完后还要进行复杂的耗时操作
+  2. 创建了大量的局部引用，占用了大量的内存，而且这些局部引用跟后面的操作没有关联性
+
+//模拟：循环创建数组
+JNIEXPORT void JNICALL Java_com_wzw_jni02_JniTest_localRef
+(JNIEnv *env, jobject jobj){
+    int i = 0;
+    for (; i < 5; i++) {
+        //创建Date 对象
+        jclass date_jcls = (*env)->FindClass(env, "java/util/Date");
+        jmethodID date_constructor_mid = (*env)->GetMethodID(env, date_jcls, "<init>", "()V");
+        jobject date_obj = (*env)->NewObject(env, date_jcls, date_constructor_mid);
+        //此处省略一万行代码。。。。。
+
+        //不再使用date_obj对象了
+        //通知垃圾回收器回收这些对象
+        (*env)->DeleteLocalRef(env, date_obj);
+
+        //此处省略一万行代码。。。。。
+
+    }
+
+}
+
+//全局引用：
+// 共享(可以跨多个线程使用)， 手动控制内存使用
+jstring global_str;
+
+//创建
+JNIEXPORT void JNICALL Java_com_wzw_jni02_JniTest_createGlobalRef
+(JNIEnv *env, jobject obj){
+    jstring jstr_obj = (*env)->NewStringUTF(env, "jni developer is powerful!");
+    global_str = (*env)->NewGlobalRef(env, jstr_obj);
+
+}
+//获得
+JNIEXPORT jstring JNICALL Java_com_wzw_jni02_JniTest_getGlobalRef
+(JNIEnv *env, jobject obj){
+
+    return global_str;
+}
+//删除
+JNIEXPORT void JNICALL Java_com_wzw_jni02_JniTest_deleteGlobalRef
+(JNIEnv *env, jobject obj){
+    (*env)->DeleteGlobalRef(env, global_str);
+
+}
+
+
+弱全局引用
+   节省内存，在内存不足时可以释放所引用的对象
+   可以引用一个不常用的对象，如果为NULL， 临时创建
+   创建： NewWeakGlobalRef()
+   销毁： DeleteGlobalRef()

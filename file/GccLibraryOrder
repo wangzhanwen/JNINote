@@ -1,0 +1,26 @@
+gcc -dynamiclib -o /Users/wzw/wzwWorkSpace/javalibrary/libJniTest.jnilib main.c -framework JavaVM -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include/darwin
+
+gcc -dynamiclib -o /Users/wzw/wzwWorkSpace/javalibrary/libJniTest.dll main.c -framework JavaVM -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include/darwin
+
+gcc -dynamiclib -o /Users/wzw/wzwWorkSpace/javalibrary/libJniTest.so main.c -framework JavaVM -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include/darwin
+
+
+J:\dev\NDK\android-ndk-r9\toolchains\arm-linux-androideabi-4.6\prebuilt\windows-x86_64\lib\gcc\arm-linux-androideabi\4.6\include
+
+J:\dev\NDK\android-ndk-r9\toolchains\arm-linux-androideabi-4.6\prebuilt\windows-x86_64\lib\gcc\arm-linux-androideabi\4.6\include-fixed
+
+J:\dev\NDK\android-ndk-r9\platforms\android-18\arch-arm\usr\include
+
+
+gcc -dynamiclib -o /Users/wzw/wzwWorkSpace/javalibrary/libJNIBsDiff.so bsdiff.c -framework JavaVM -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include/darwin
+gcc -dynamiclib -o /Users/wzw/wzwWorkSpace/javalibrary/libJNIBsDiff.so bsdiff.c -framework JavaVM -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include/darwin
+
+
+gcc -dynamiclib -o /Users/wzw/wzwWorkSpace/javalibrary/libJNIBsDiff.so bsdiff.cpp -framework JavaVM -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include/darwin
+
+
+gcc -fPIC -shared blocksort.c decompress.c bsdiff.c randtable.c  huffman.c compress.c  bzlib.c crctable.c -o WzwBsdiff.so
+
+
+diff: gcc -dynamiclib -o /Users/wzw/wzwWorkSpace/javalibrary/libBsDiff.so blocksort.c decompress.c bsdiff.c randtable.c bzlib.c huffman.c compress.c  crctable.c -framework JavaVM -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include/darwin
+patch: gcc -dynamiclib -o /Users/wzw/wzwWorkSpace/javalibrary/libBsDiffPatch.so blocksort.c decompress.c bspatch.c randtable.c bzlib.c huffman.c compress.c  crctable.c -framework JavaVM -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include -I/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/include/darwin

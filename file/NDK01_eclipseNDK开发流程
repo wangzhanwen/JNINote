@@ -1,0 +1,25 @@
+Eclipse NDK开发流程
+  1. 编写Java层Native方法
+  2. javah命令生成头文件
+  3. 创建jni目录
+  4. 添加本地支持 AndroidTools -> add native support
+     (消除头文件警告： Properties ->c/c++ General -> Paths And Symbols)
+
+     /Users/yidong9/Library/Android/ndk/android-ndk-r11b/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9/include
+
+     /Users/yidong9/Library/Android/ndk/android-ndk-r11b/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9/include-fixed
+
+     /Users/yidong9/Library/Android/ndk/android-ndk-r11b/platforms/android-18/arch-arm/usr/include
+
+ 5.实现头文件中定义的函数
+ 6.编译生成.so动态库
+ 7.加载动态库
+
+
+ /Users/wzw/wzwWorkSpace/android-ndk-r11b/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9/include
+
+ /Users/wzw/wzwWorkSpace/android-ndk-r11b/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9/include-fixed
+
+/Users/wzw/wzwWorkSpace/android-ndk-r11b/platforms/android-18/arch-arm/usr/include
+
+gcc -fPIC -shared blocksort.c decompress.c bsdiff.c randtable.c bzlib.c huffman.c compress.c unzcrash.c bzlib.c crctable.c -o WzwBsdiff.so

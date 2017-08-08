@@ -1,0 +1,27 @@
+异常处理
+   1. 包证java代码可以运行
+   2. 补救措施保证c代码继续运行
+ JNI 自己抛出的异常是一个Throwable，在java层try()catch(Throwable/Error){}可以捕捉到,使用try()catch(Exception){}
+
+JNIEXPORT void JNICALL Java_com_wzw_jni02_JniTest_exception
+(JNIEnv *env, jobject jobj){
+    jclass jcls = (*env)->GetObjectClass(env, jobj);
+    jfieldID fid = (*env)->GetFieldID(env, jcls, "key2", "Ljava/lang/String;");
+
+    //检测是否发生java异常
+    jthrowable exception = (*env)->ExceptionOccurred(env);
+    if (exception != NULL) {
+        //让Java代码继续执行
+        (*env)->ExceptionClear(env);
+        //补救措施
+        fid = (*env)->GetFieldID(env, jcls, "key", "Ljava/lang/String;");
+    }
+    //获取属性的值
+    jstring jstr = (*env)->GetObjectField(env, jobj, fid);
+    const char *str = (*env)->GetStringUTFChars(env, jstr, NULL);
+
+    //认为抛出异常，交个java层处理
+    jclass exception_jcls = (*env)->FindClass(env, "java/lang/IllegalArgumentException");
+    (*env)->ThrowNew(env, exception_jcls, "key's value is invalid!");
+
+}

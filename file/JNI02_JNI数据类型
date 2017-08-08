@@ -1,0 +1,52 @@
+
+********************************************************************************
+
+    JNIEXPORT jstring JNICALL Java_com_wzw_jni02_JniTest_getStrFromC
+    (JNIEnv *env, jclass jcls){
+        return  (*env)->NewStringUTF(env, "C String!");
+    }
+    JNIEXPORT jstring JNICALL Java_com_wzw_jni02_JniTest_getStr2FromC
+    (JNIEnv *env, jobject jobj){
+        return  (*env)->NewStringUTF(env, "Hello World!");
+    }
+
+     JNIEvn 结构体指针
+     evn 二级指针
+     代表Java运行环境, 调用Java中的代码
+
+     每个native函数，都至少有两个参数(JNIEnv*, jclass 或 jobject)
+       1. 当native方法为静态时：
+          jclass代表native方法所属类的class对象(JniTest.class)
+       2. 当native方法为非静态时：
+          jobject代表native方法所属的对象
+
+********************************************************************************
+
+ JNI数据类型
+   Java数据类型与JNI数据类型的映射关系
+   java类型 -> JNI类型 -> C,C++类型
+
+   Java类型　　 本地类型　　  字节(bit)
+    boolean　　jboolean　　  8, unsigned
+    byte　　　　jbyte　　　　 8
+    char　　　　jchar　　　　 16, unsigned
+    short　　　 jshort　　　 16
+    int　　　　 jint　　　　  32
+    long　　　　jlong　　　　 64
+    float　　　 jfloat　　　 32
+    double　　　jdouble　　　64
+    void　　　　void　　　　  n/a　　
+
+ 引用数据类型
+    Java类型　　 本地类型　
+    String      jstring
+    Object      jobject
+    byte[]      jByteArray    基本类型数组
+    Object[]    jObjectArray  引用类型数组
+    String[]    jObjectArray
+
+********************************************************************************
+
+ c/c++ 调用java成员
+
+********************************************************************************

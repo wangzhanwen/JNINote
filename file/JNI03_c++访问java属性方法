@@ -1,0 +1,160 @@
+
+1. 访问java类非静态属性
+   修改key属性
+JNIEXPORT jstring JNICALL Java_com_wzw_jni02_JniTest_accessField
+(JNIEnv *env, jobject jobj){
+
+    //jobj是对象，JniTest.class
+    jclass cls = (*env)->GetObjectClass(env, jobj);
+    //属性名称， 属性签名
+    jfieldID fid = (*env)->GetFieldID(env, cls, "key", "Ljava/lang/String;");
+
+    //获取key属性的值
+    jstring jstr = (*env)->GetObjectField(env, jobj, fid);
+
+    //jstring -> c字符串
+    //isCopy true代表复制，开辟新内存， false代表不复制
+    const char *c_str = (*env)->GetStringUTFChars(env, jstr, NULL);
+    //拼接得到新的字符串
+    char text[20] = "change ";
+    strcat(text,c_str);
+
+    //c字符串 -> jstring
+    jstring new_str = (*env)->NewStringUTF(env, text);
+
+    //修改key
+    (*env)->SetObjectField(env, jobj, fid, new_str);
+
+    return  new_str;
+}
+
+
+
+//2. 访问java类静态属性
+JNIEXPORT void JNICALL Java_com_wzw_jni02_JniTest_accessStaticField
+(JNIEnv *env, jclass jcls){
+
+    jfieldID fid = (*env)->GetStaticFieldID(env, jcls, "count", "I");
+
+    jint count  = (*env)->GetStaticIntField(env, jcls, fid);
+
+    count++;
+
+   //修改
+    (*env)->SetStaticIntField(env, jcls,fid, count);
+
+}
+
+
+//3. 访问java 非静态方法
+JNIEXPORT void JNICALL Java_com_wzw_jni02_JniTest_accessMethod
+(JNIEnv *env, jobject jobj){
+
+    jclass cls = (*env)->GetObjectClass(env, jobj);
+
+    ********************************************************************************
+    *//进入工程bin目录，执行指令 javap -s -p com.wzw.jni02.JniTest 获得类属性Id， 方法Id *
+    ********************************************************************************
+    jmethodID mthodId = (*env)->GetMethodID(env, cls, "getrandomInt", "(I)I");
+
+    //调用
+    jint random = (*env)->CallIntMethod(env, jobj, mthodId, 88);
+
+    printf("random: %d",random);
+}
+
+//4. 访问java静态方法
+JNIEXPORT void JNICALL Java_com_wzw_jni02_JniTest_accessStaticMethod
+(JNIEnv *env, jclass jcls){
+
+    jmethodID mid = (*env)->GetStaticMethodID(env, jcls, "getUUID", "()Ljava/lang/String;");
+
+    jstring uuid = (*env)->CallStaticObjectMethod(env, jcls, mid);
+
+    //随机文件名称
+    //jstring -> char*
+    // isCopy: JNI_FALSE 代表java和c操作同一个字符串，同一块内存地址
+    const char *uuid_str = (*env)->GetStringUTFChars(env, uuid, JNI_FALSE);
+    printf("uuid_str: %s",uuid_str);
+
+    char filename[100];
+    const char *filePath = "%s.txt";
+    sprintf(filename, filePath, uuid_str);
+
+    FILE *fp = fopen(filename, "w");
+
+    fputs("I love java", fp);
+    fclose(fp);
+
+}
+
+
+//5. 访问java 构造方法
+JNIEXPORT jobject JNICALL Java_com_wzw_jni02_JniTest_accessConstructor
+(JNIEnv *env, jobject jobj){
+    //获得Date类的class
+    jclass jcls = (*env)->FindClass(env, "java/util/Date");
+    //获得Date类的无参构造方法
+    jmethodID constructor_mid = (*env)->GetMethodID(env, jcls, "<init>", "()V");
+    //实例化Date对象
+    jobject jdate_obj = (*env)->NewObject(env, jcls, constructor_mid);
+    //调用getTime方法
+    jmethodID getTime_mid = (*env)->GetMethodID(env, jcls, "getTime", "()J");
+    jlong time = (*env)->CallLongMethod(env, jdate_obj, getTime_mid);
+
+    printf("\n time:%lld\n", time);
+
+
+    return jdate_obj;
+}
+
+
+//6. 访问父类方法
+JNIEXPORT void JNICALL Java_com_wzw_jni02_JniTest_accessNonvirtualMethod
+(JNIEnv *env, jobject jobj){
+    jclass jcls = (*env)->GetObjectClass(env, jobj);
+
+    jfieldID human_fid = (*env)->GetFieldID(env, jcls, "human", "Lcom/wzw/jni02/Human;");
+
+    jobject human_obj = (*env)->GetObjectField(env, jobj, human_fid);
+
+    //获取sayHi()方法
+    jclass human_jcls = (*env)->FindClass(env, "com/wzw/jni02/Human");
+    jmethodID human_sayHai_mid = (*env)->GetMethodID(env, human_jcls, "sayHi", "()V");
+
+    //执行sayHi()方法
+    (*env)->CallObjectMethod(env, human_obj, human_sayHai_mid);
+
+    //调用父类sayHai()方法
+    (*env)->CallNonvirtualObjectMethod(env, human_obj, human_jcls, human_sayHai_mid);
+}
+
+//中文乱码问题
+JNIEXPORT jstring JNICALL Java_com_wzw_jni02_JniTest_chineseChars
+(JNIEnv *env, jobject jobj, jstring jinStr){
+    const char *inc_str = (*env)->GetStringUTFChars(env, jinStr, JNI_FALSE);
+    printf("%s\n", inc_str);
+
+    //c->jstring
+    char *c_str = "文章&&姚笛";
+    //char c_str[] = "文章&&姚笛";
+    //jstring jstr = (*env)->NewStringUTF(env, c_str); //utf_16 如果乱码进行下面处理
+    //执行String(byte bytes[], String charsetName) 构造方法需要的条件
+    // 1 . jmethodID
+    // 2.  byte数组 jbyteArray
+    // 3.  字符编码 jstring
+
+    jclass string_jcls = (*env)->FindClass(env, "java/lang/String");
+    jmethodID string_constructor_mid = (*env)->GetMethodID(env, string_jcls, "<init>", "([BLjava/lang/String;)V");
+
+    //jbyte <--> char
+    //jbyteArray  <--> char[]
+    jbyteArray jbyteArr = (*env)->NewByteArray(env, (int)strlen(c_str));
+    (*env)->SetByteArrayRegion(env, jbyteArr, 0, (int)strlen(c_str), c_str);
+
+    //字符编码 jstring
+    jstring charsetName = (*env)->NewStringUTF(env, "GB2312");
+
+    //调用构造函数，返回编码之后的jstring
+    return (*env)->NewObject(env, string_jcls, string_constructor_mid, jbyteArr, charsetName);
+}
