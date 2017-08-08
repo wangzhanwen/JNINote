@@ -1,0 +1,192 @@
+
+#include <iostream>
+
+//标准命名空间（包含很多标准的定义）
+//standard
+using namespace std;
+//命名空间类似java的包
+
+
+/*
+ //自定义命名空间
+namespace NSP_A{
+    int a = 10;
+
+    struct Student{
+        char name[20];
+        int age;
+    };
+
+    struct Teacher{
+        char name[20];
+        int age;
+    };
+}
+
+namespace NSP_B {
+    int a = 12;
+    //命名空间嵌套
+    namespace NSP_B_C{
+        int a = 13;
+    }
+
+    struct Student{
+        char name[20];
+        int age;
+    };
+
+}
+
+
+int main(int argc, const char * argv[]) {
+
+    //std::cout << "Hello, World!\n" << std::endl;
+    cout << " Hello, World!\n" << endl;
+
+    //使用命名空间
+    // << 运算符重载
+    //:: 访问符
+    cout << " NSP_A->a:" << NSP_A::a << endl;
+    cout << " NSP_B->a:" << NSP_B::a << endl;
+    cout << " NSP_B.C->a:" <<  NSP_B::NSP_B_C::a << endl;
+
+    //使用命名空间中的结构体
+    //    NSP_A::Teacher t;
+    //    t.age = 60;
+    //
+    //    NSP_A::Student s;
+    //    s.age = 20;
+
+    //    using namespace NSP_A;
+    //    Teacher t;
+    //    t.age = 80;
+    //    Student s;
+    //    s.age = 26;
+    //    cout << " NSP_A->Stu.age:" <<  s.age << endl;
+
+    return 0;
+}
+
+ */
+
+/*
+#define PI 3.14
+class MyCircle{
+//属性(公用权限访问修饰符)
+private:
+    double r;
+    double s;
+
+public :
+    double length;
+
+public:
+    void setR(double r){
+        this->r = r;
+    }
+
+    double getS(){
+        return PI * r * r;
+    }
+
+};
+
+int main(int argc, const char * argv[]) {
+    MyCircle c1;
+    c1.setR(4);
+    cout<<" 圆的面积:"<<c1.getS()<<endl;
+
+}
+
+ */
+
+/*
+ //结构体
+struct MyTeacher{
+public:
+    char name[20];
+    int age;
+
+public:
+    void say(){
+        cout<< this->age << "岁" <<endl;
+    }
+
+
+};
+
+int main(int argc, const char * argv[]) {
+    MyTeacher t1;
+    t1.age = 40;
+    t1.say();
+}
+ */
+
+
+/*
+
+int main(int argc, const char * argv[]) {
+    bool isSingle = 17;
+    if(isSingle){
+        cout <<"true" << endl;
+    }else{
+        cout <<"false" << endl;
+
+    }
+    //c++ 三目运算结果可以作为左值， c, java不行
+    int a = 10;
+    int b = 20;
+    ((a >b) ? a:b) = 30;
+
+}
+
+ */
+
+
+/*
+ //引用
+int main(int argc, const char * argv[]) {
+    // 变量名 -> 门牌号（内存空间的别名0x000089）；
+    int a = 30;
+    //b就是这个内存空间的另外一个别名
+    int &b = a;
+
+    int *pa = &a;
+    int *pb = &b;
+
+    cout<< a << endl;
+    cout<< b << endl;
+    cout<< pa << endl;
+    cout<< pb << endl;
+
+}
+ */
+
+
+//指针值交换
+void  swap_1(int *a, int *b){
+    int c = 0;
+    c = *a;
+    *a = *b;
+    *b = c;
+}
+
+//引用值交换
+void swap_2(int &a, int &b){
+    int c = 0;
+    c = a;
+    a = b;
+    b = c;
+
+}
+
+int main(int argc, const char * argv[]) {
+    int x = 10;
+    int y = 20;
+
+    cout<< x << ","<< y << endl;
+    swap_1(&x, &y);
+    cout<< x << ","<< y << endl;
+    swap_2(x, y);
+    cout<< x << ","<< y << endl;
+}

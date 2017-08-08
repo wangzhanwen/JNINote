@@ -1,0 +1,209 @@
+#include <iostream>
+#include <stdarg.h>
+#include <stdlib.h>
+using namespace std;
+
+
+/*
+struct Student{
+    char *name;
+    int age;
+
+};
+
+
+void print(Student &stu){
+    cout<<"name:"<<stu.name<<endl;
+    cout<<"age:"<<stu.age<<endl;
+
+}
+
+//引用的主要功能： 作为函数的参数或返回值,引用是变量的别名，指针是变量的地址
+int main(int argc, const char * argv[]) {
+    Student stu;
+    stu.name = "王小帅";
+    stu.age = 21;
+    print(stu);
+
+    return 0;
+}
+ */
+
+
+/*
+
+ struct Student{
+    char *name;
+    int age;
+
+};
+
+void getStudent(Student **p){
+    Student *stup = (Student*)malloc(sizeof(Student));
+    stup->name = "王小战";
+    stup->age = 18;
+    *p = stup;
+}
+
+
+
+//指针的引用，代替二级指针
+void getStudent(Student* &stup){
+    stup = (Student*)malloc(sizeof(Student));
+    stup->name = "王小战";
+    stup->age = 18;
+
+}
+
+int main(int argc, const char * argv[]) {
+    Student *stu = NULL;
+    //getStudent(&stu);
+
+    getStudent(stu);
+
+    cout<<"name:"<<stu->name<<endl;
+    cout<<"age:"<<stu->age<<endl;
+
+    return 0;
+}
+ */
+
+
+/*
+ int main(int argc, const char * argv[]) {
+    //指针常量：指针的常量，不改变地址的指针，但可以修改它指向地址里的内容
+    int a = 2;
+    int b =3;
+    int *const p1 = &a;
+    // p1 = &b; //指针常量不可改变
+    *p1 = 4;
+    cout<<"a:"<<a<<endl;
+
+    //常量指针，指向常量的指针，内容不能修改
+    const int *p2 = &a;
+    cout<<"p2:"<<*p2<<endl;
+    p2 = &b;
+    //*p2 = 9;
+    cout<<"p2:"<<*p2<<endl;
+
+
+    return 0;
+}
+
+ */
+
+
+ /*
+
+//单纯给变量取别名，没有意义，作为函数参数传递，能够保证参数传递过程中不产生副本
+//引用可以直接操作变量， 指针要通过（*p）间接操作变量，指针的可读性差
+
+struct Student{
+    char *name;
+    int age;
+
+};
+
+void print(Student *stup){
+    cout<<"name:"<<stup->name<<endl;
+    cout<<"age:"<<stup->age<<endl;
+
+}
+
+void print(Student &stu){
+    cout<<"name:"<<stu.name<<endl;
+    cout<<"age:"<<stu.age<<endl;
+
+}
+
+int main(int argc, const char * argv[]) {
+    const int a = NULL;
+    //引用必须要有值，不能为空
+    //int &a = NULL;
+
+    Student *stu = NULL;
+    //报错，防止不报错，进行非空判断
+    print(stu);
+
+
+    //引用必须要有值，不能传进去
+    //Student &stu1 = NULL;
+    //print(stu1);
+
+    // 常引用
+    int m = 10;
+    int n = 20;
+    const int &k = m;
+    //k = n;
+
+    return 0;
+}
+
+
+  */
+
+
+
+/*
+struct Student{
+    char name;
+    int age;
+
+};
+
+int main(int argc, const char * argv[]) {
+    Student stu;
+    Student &stu1 = stu;
+    Student *stup = &stu;
+
+    cout<< sizeof(stu1) <<endl;
+    cout<< sizeof(stup) <<endl;
+    return 0;
+}
+
+*/
+
+
+/*
+
+ //函数
+void print(int x, int y, int z = 666){
+    cout<< "x:"<< x <<",";
+    cout<< "y:"<< y <<",";
+    cout<< "z:"<< z <<endl;
+}
+
+int main(int argc, const char * argv[]) {
+    print(18,8);
+    print(28,18, 8);
+    return 0;
+}
+
+ */
+
+//可变参数
+/*
+ void func(int i ,...){
+    //可变参数指针
+    va_list args_p;
+    //开始读取可变参数，i 是最后一个固定参数
+    va_start(args_p, i);
+    int a = va_arg(args_p, int);
+    int b = va_arg(args_p, int);
+    int c = va_arg(args_p, int);
+
+    cout<< "a:"<< a <<",";
+    cout<< "b:"<< b <<",";
+    cout<< "c:"<< c <<endl;
+    //结束
+    va_end(args_p);
+}
+
+ int main(int argc, const char * argv[]) {
+ func(10,20,30,40);
+
+ return 0;
+ }
+
+
+*/

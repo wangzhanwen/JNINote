@@ -1,0 +1,158 @@
+#include <iostream>
+using namespace std;
+#include "Student.hpp"
+
+
+/*
+
+ class Teacher{
+    private :
+      int age;
+      char *name;
+    public :
+    Teacher(){
+        cout<<"无参构造函数！"<<endl;
+    }
+
+    Teacher(int age, char *name){
+        this->age = age;
+        this->name = name;
+        cout<<"有参构造函数！"<<endl;
+    }
+
+};
+
+int main(int argc, const char * argv[]) {
+    Teacher teacher;
+    Teacher teacher2(30, "李老师");
+
+
+    return 0;
+}
+
+ */
+
+/*
+
+ class Teacher{
+    private :
+      int age;
+      char *name;
+    public :
+     Teacher(){
+         //设置默认值
+         this->name = (char*)malloc(sizeof(100));
+         strcpy(this->name, "Mr.Wang");
+         this->age = 18;
+         cout<<"无参构造函数！"<<endl;
+     }
+      //析构函数： 当对象要被系统释放时，析构函数被调用
+      ~Teacher(){
+        cout<<"析构函数！"<<endl;
+        //释放内存
+        free(this->name);
+     }
+
+};
+
+int main(int argc, const char * argv[]) {
+    Teacher teacher;
+    return 0;
+}
+
+ */
+
+
+/*
+//拷贝构造函数
+class Teacher{
+    private :
+     int age;
+     char *name;
+    public :
+      Teacher(int age, char *name){
+        this->name = (char*)malloc(sizeof(100));
+        this->age = age;
+        this->name = name;
+        cout<<"有参构造函数！"<<endl;
+    }
+
+    //浅拷贝构造函数(值拷贝)
+    //默认拷贝构造函数，就是值拷贝
+    Teacher(const Teacher &obj){
+        this->age = obj.age;
+        this->name = obj.name;
+        cout<<"浅拷贝构造函数！"<<endl;
+    }
+
+    ~Teacher(){
+        cout<<"析构函数！"<<endl;
+        //释放内存
+        free(this->name);
+    }
+
+
+    void toString(){
+        cout<<"name:"<<name <<",age:"<< age<<endl;
+    }
+};
+
+int main(int argc, const char * argv[]) {
+    Teacher t1(30, "李老师");
+    Teacher t2 = t1;
+    t2.toString();
+
+    //浅拷贝构造函数 问题 ： t1,t2的name指向同一块内存空间，t1, t2 销毁调用析构函数，释放name内存，name被释放两次报错
+
+    return 0;
+}
+
+*/
+
+//深拷贝构造函数
+
+class Teacher{
+    private :
+    int age;
+    char *name;
+    public :
+    Teacher(int age, char *name){
+        long len = strlen(name);
+        this->name = (char*)malloc(len + 1);
+        strcpy(this->name, name);
+        this->age = age;
+
+        cout<<"有参构造函数！"<<endl;
+    }
+
+    //深拷贝构造函数
+    Teacher(const Teacher &obj){
+        //复制name属性
+        long len = strlen(obj.name);
+        this->name = (char*)malloc(len + 1);
+        strcpy(this->name, obj.name);
+        this->age = obj.age;
+
+        cout<<"深拷贝构造函数！"<<endl;
+    }
+
+    ~Teacher(){
+        cout<<"析构函数！"<<endl;
+        //释放内存
+        free(this->name);
+    }
+
+
+    void toString(){
+        cout<<"name:"<<name <<",age:"<< age<<endl;
+    }
+};
+
+int main(int argc, const char * argv[]) {
+    Teacher t1(30, "李老师");
+    Teacher t2 = t1;
+    t2.toString();
+
+
+    return 0;
+}
