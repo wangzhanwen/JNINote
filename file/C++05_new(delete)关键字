@@ -1,0 +1,64 @@
+#include <iostream>
+using namespace std;
+
+
+
+//C++ 通过new(delete) 动态内存分配
+//C   通过malloc(free) 动态内存分配
+class Teacher{
+private :
+    string name;
+public :
+    Teacher(string name){
+        this->name = name;
+        cout<<"Teacher有参构造函数！"<<endl;
+    }
+    ~Teacher(){
+        cout<<"Teacher析构函数！"<<endl;
+    }
+    string getName(){
+        return this->name;
+    }
+    void setName(string name){
+       this->name = name;
+    }
+
+
+
+};
+
+
+void func(){
+    //C++:
+    //new 是在堆内存开辟空间，调用构造函数，返回指针, 使用delete释放才会销毁，调用析构函数
+    Teacher *t0 = new Teacher("张老师");
+    cout<< t0->getName()<<endl;
+    //释放：
+    delete(t0);
+
+    //C: malloc在堆内存开辟空间 不会调用构造函数和析构函数
+    Teacher *t1 =(Teacher*)malloc(sizeof(Teacher));
+    t1->setName("王老师");
+    cout<< t1->getName()<<endl;
+    free(t1);
+
+}
+
+int main(int argc, const char * argv[]) {
+    func();
+
+    //数组类型
+    //C:
+    int* p0 = (int*)malloc(sizeof(int) * 10);
+    p0[0] = 10;
+    free(p0);
+
+    //C++:
+    int *p1 = new int[10];
+    p1[0] = 20;
+    //释放数组
+    delete[] p1;
+
+
+    return 0;
+}

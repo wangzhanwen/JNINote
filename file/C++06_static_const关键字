@@ -1,0 +1,151 @@
+#include <iostream>
+using namespace std;
+
+//static 静态
+/*
+
+class Teacher{
+public :
+    string name;
+    static int total;
+public :
+    Teacher(string name){
+        this->name = name;
+        cout<<"Teacher有参构造函数！"<<endl;
+    }
+    ~Teacher(){
+        cout<<"Teacher析构函数！"<<endl;
+    }
+    string getName(){
+        return this->name;
+    }
+    void setName(string name){
+        this->name = name;
+    }
+
+    static void count(){
+        total++;
+    }
+
+};
+
+//只能在这个地方静态“ 初始化 ”赋值，在其他地方修改可以（TMD 太诡异了。。。。）
+int Teacher::total = 9;
+
+int main(int argc, const char * argv[]) {
+    //Teacher::total = 9; 不能在这里进行静态“初始化”赋值
+
+    cout<< Teacher::total <<endl;
+    Teacher::total = 10;
+
+    Teacher t1("wangxiaosuai");
+    t1.count();
+    cout<< Teacher::total <<endl;
+
+    Teacher::count();
+    cout<< Teacher::total <<endl;
+
+    return 0;
+}
+
+ */
+
+
+/*
+
+//类的大小
+class A{
+public:
+    int i;
+    int j;
+    int k;
+    static int m;
+};
+
+void print(){
+    cout<<"打印"<<endl;
+}
+
+class B{
+public :
+    int i;
+    int j;
+    int k;
+    //mac 指针大小：12个字节
+    //void (*print)() = print; //函数指针
+
+    void print(){
+        cout<<"打印"<<endl;
+    }
+
+
+};
+
+int main(int argc, const char * argv[]) {
+    cout<< "A 的大小："<< sizeof(A) <<endl;
+    cout<< "A 的大小："<< sizeof(B) <<endl;
+
+    //C C++:  内存分区：栈，堆， 全局（静态，全局），常量区(字符串)， 程序代码区
+    // 普通属性与结构体相同的内存布局
+    return 0;
+}
+
+*/
+
+
+
+//this指针：当前对象的指针
+// 函数是共享的，必须要有能够标识当前对象是谁的办法
+
+class Teacher{
+private :
+    string name;
+    int age;
+
+public :
+    Teacher(string name, int age){
+        this->name = name;
+        this->age = age;
+        cout<<"Teacher有参构造函数！"<<endl;
+    }
+    ~Teacher(){
+        cout<<"Teacher析构函数！"<<endl;
+    }
+
+    //常函数，修饰的是this
+    //既不能改变指针的值，又不能改变指针指向的的内容
+    //const Teacher* const this
+    void print() const{
+        printf("%#x\n", this);
+        //const修饰：
+        //属性值不能修改
+        //this->name = "王小帅";
+        //改变this指针的值
+        //this = (Teacher*)0x00009;
+
+        cout<<"name：" <<this->name << ", age: " << this->age <<endl;
+
+    }
+
+    void print2(){
+
+        cout<<"name：" <<this->name << ", age: " << this->age <<endl;
+
+    }
+
+
+};
+
+int main(int argc, const char * argv[]) {
+    Teacher t1("王老师",30);
+    Teacher t2("李老师",38);
+    t1.print();
+    t2.print();
+
+    const Teacher t3("李老师",38);
+    //常量对象只能调用常量函数，不能调用非常量函数， 普通对象都可调用
+    //常函数，防止数据成员被非法访问
+    //t3.print2();
+
+    return 0;
+}
