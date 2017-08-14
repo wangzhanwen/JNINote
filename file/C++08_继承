@@ -1,0 +1,228 @@
+#include <iostream>
+using namespace std;
+
+/************************************************
+
+ 基类中      继承方式             子类中
+ public     ＆ public继承        => public
+ public     ＆ protected继承     => protected
+ public     ＆ private继承       => private
+
+ protected  ＆ public继承        => protected
+ protected  ＆ protected继承     => protected
+ protected  ＆ private继承       => private
+
+ private    ＆ public继承        => 子类无权访问
+ private    ＆ protected继承     => 子类无权访问
+ private    ＆ private继承       => 子类无权访问
+
+ ************************************************/
+
+//继承：代码的重用行
+
+/*
+
+class Human{
+public:
+    void say(){
+        cout<<"我会说话！"<<endl;
+    }
+public:
+    char *name;
+    int age;
+};
+
+
+class Man : public Human{
+public :
+    void chasing(){
+        cout<<"泡妞"<<endl;
+    }
+private :
+    char* brother;
+
+};
+
+int main(int argc, const char * argv[]) {
+    Man m0;
+    m0.say();
+
+    //父类的指针指向子类的引用
+    Human *hp = &m0;
+    hp->say();
+
+    //父类引用
+    Human &hu0 = m0;
+    hu0.say();
+
+    //子类对象初始化父类类型对象
+    Human hu1 = m0;
+    hu1.say();
+
+    return 0;
+}
+
+*/
+
+/*
+
+ //向父类构造方法传参
+
+class Human{
+public:
+    Human(char *name, int age){
+        this->name = name;
+        this->age = age;
+    }
+    void say(){
+        cout<<"我会说话！"<<endl;
+    }
+protected:
+    char *name;
+    int age;
+};
+
+
+class Man : public Human{
+public :
+    //给父类构造函数传值
+    Man(char *brother, char* s_name, int s_age) : Human(s_name, s_age){
+        this->brother = brother;
+    }
+    void chasing(){
+        cout<<"泡妞"<<endl;
+    }
+
+    void toString(){
+        cout<<"name: "<<this->name<<", age: "<< this->age<< ", brother: "<<this->brother<<endl;
+
+    }
+private :
+    char* brother;
+
+};
+
+int main(int argc, const char * argv[]) {
+    Man m1("Json", "Jack", 18);
+    m1.toString();
+    return 0;
+}
+
+ */
+
+
+
+/*
+
+//构造函数调用顺序： 先调父类后调子类
+//析构函数调用顺序： 先调子类后调父类
+
+class Human{
+public:
+    Human(char *name, int age){
+        this->name = name;
+        this->age = age;
+        cout<<"Human构造函数"<<endl;
+    }
+    void say(){
+        cout<<"Human我会说话！"<<endl;
+    }
+    ~Human(){
+      cout<<"Human析构函数"<<endl;
+    }
+protected:
+    char *name;
+    int age;
+};
+
+
+class Man : public Human{
+public :
+    //给父类构造函数传值
+    Man(char *brother, char* s_name, int s_age) : Human(s_name, s_age){
+        this->brother = brother;
+        cout<<"Man构造函数"<<endl;
+    }
+
+    void say(){
+        cout<<"Man男人喜欢装逼！"<<endl;
+    }
+
+    void toString(){
+        cout<<"name: "<<this->name<<", age: "<< this->age<< ", brother: "<<this->brother<<endl;
+
+    }
+    ~Man(){
+        cout<<"Man析构函数"<<endl;
+    }
+private :
+    char* brother;
+
+};
+
+int main(int argc, const char * argv[]) {
+    //是覆盖，并非动态
+    Man m1("Json", "Jack", 18);
+    m1.toString();
+    //子类调用父类方法
+    m1.Human::say();
+    cout<<"*****************************************"<<endl;
+
+    m1.say();
+    Human h1 = m1;
+    h1.say();
+    cout<<"*****************************************"<<endl;
+
+
+    return 0;
+}
+
+*/
+
+
+/*
+
+//多继承
+class Person{
+};
+
+class Citizen{
+
+};
+
+class Student : public Person, public Citizen{
+
+};
+
+ */
+
+//继承的二义性
+//虚继承，不同路径继承来的同名成员只有一份拷贝，解决调用不明确的问题
+class A{
+public :
+    char *name;
+};
+
+class A1: virtual public A{
+};
+
+class A2: virtual public A{
+
+};
+
+class B:public A1, public A2{
+
+};
+
+int main(int argc, const char * argv[]) {
+    B b;
+    //不使用虚继承 报错，二义性
+    b.name = "json";
+
+    //显示调用
+    //b.A1::name = "json";
+    //b.A2::name = "json";
+
+
+    return 0;
+}

@@ -1,0 +1,41 @@
+
+
+    FMOD_DSP_TYPE_UNKNOWN，/ *本机是通过非FMOD插件创建的，因此目的不明。 * /
+    FMOD_DSP_TYPE_MIXER，/ *本机不需要任何输入，并将它们混合在一起，然后将结果提供给声卡单元。 * /
+    FMOD_DSP_TYPE_OSCILLATOR，/ *本机产生正弦/平方/锯/三角形或噪声音。 * /
+    FMOD_DSP_TYPE_LOWPASS，/ *该单元使用高质量的谐振低通滤波器算法对声音进行滤波，但消耗更多的CPU时间。 * /
+    FMOD_DSP_TYPE_ITLOWPASS，/ *本机使用脉冲跟踪器中使用的谐振低通滤波器算法对其进行滤波，但截止频率有限（0至8060hz）。 * /
+    FMOD_DSP_TYPE_HIGHPASS，/ *本机使用谐振高通滤波器算法对声音进行滤波。 * /
+    FMOD_DSP_TYPE_ECHO，/ *本机在声音上产生回音，并以所需的速率淡出。 * /
+    FMOD_DSP_TYPE_FADER，/ *本机平移并缩放单元的音量。 * /
+    FMOD_DSP_TYPE_FLANGE，/ *本机对声音产生法兰效应。 * /
+    FMOD_DSP_TYPE_DISTORTION，/ *本机扭曲声音。 * /
+    FMOD_DSP_TYPE_NORMALIZE，/ *本机将声音归一化或放大到一定程度。 * /
+    FMOD_DSP_TYPE_LIMITER，/ *本机将声音限制在一定水平。 * /
+    FMOD_DSP_TYPE_PARAMEQ，/ *本机衰减或放大所选频率范围。 * /
+    FMOD_DSP_TYPE_PITCHSHIFT，/ *该单位弯曲声音，而不改变播放速度。 * /
+    FMOD_DSP_TYPE_CHORUS，/ *本机对声音产生合唱效果。 * /
+    FMOD_DSP_TYPE_VSTPLUGIN，/ *本机允许使用Steinberg VST插件* /
+    FMOD_DSP_TYPE_WINAMPPLUGIN，/ *本机允许使用Nullsoft Winamp插件* /
+    FMOD_DSP_TYPE_ITECHO，/ *本机在声音上产生回声，并按照脉冲跟踪器中使用的所需速度淡出。 * /
+    FMOD_DSP_TYPE_COMPRESSOR，/ *本机实现动态压缩（链接/非链接多通道，宽带）* /
+    FMOD_DSP_TYPE_SFXREVERB，/ *本机实现SFX混响* /
+    FMOD_DSP_TYPE_LOWPASS_SIMPLE，/ *本机使用无共振的简单低通滤波声音，但具有灵活的截止频率，速度快。 * /
+    FMOD_DSP_TYPE_DELAY，/ *本机在声道的各个通道上产生不同的延迟。 * /
+    FMOD_DSP_TYPE_TREMOLO，/ *本机对声音产生颤音/斩波效果。 * /
+    FMOD_DSP_TYPE_LADSPAPLUGIN，/ *不支持/已弃用。 * /
+    FMOD_DSP_TYPE_SEND，/ *本机将DSP信号的任何地方的信号复制到返回DSP。 * /
+    FMOD_DSP_TYPE_RETURN，/ *本机从多个发送DSP接收信号。 * /
+    FMOD_DSP_TYPE_HIGHPASS_SIMPLE，/ *此单元使用简单的高通，无谐振过滤声音，但具有灵活的截止和快速。 * /
+    FMOD_DSP_TYPE_PAN，/ *该单元平移信号，也可能上混合或下混合。 * /
+    FMOD_DSP_TYPE_THREE_EQ，/ *本机是三频均衡器。 * /
+    FMOD_DSP_TYPE_FFT，/ *本机简单分析信号，并通过getParameter提供频谱信息。 * /
+    FMOD_DSP_TYPE_LOUDNESS_METER，/ *本机分析信号的响度和真峰值。 * /
+    FMOD_DSP_TYPE_ENVELOPEFOLLOWER，/ *本机跟踪输入/侧链信号的包络。格式即将公开披露。 * /
+    FMOD_DSP_TYPE_CONVOLUTIONREVERB，/ *本机实现卷积混响。 * /
+    FMOD_DSP_TYPE_CHANNELMIX，/ *该单元提供每个信号通道增益，并输出通道映射，以允许由多组信号组成的1个多通道信号映射到单个输出信号。 * /
+    FMOD_DSP_TYPE_TRANSCEIVER，/ *本机从多达32个不同插槽的选择中发送和接收。它就像发送/返回，但它使用全局插槽而不是返回作为目标。它还具有其他功能。多个收发器可以从单个信道接收，或者多个收发器可以发送到单个信道，或两者的组合。 * /
+    FMOD_DSP_TYPE_OBJECTPAN，/ *本机将信号发送到像Dolby Atmos这样的3d对象编码器。支持FMOD_DSP_TYPE_PAN参数的一个子集。 * /
+
+    FMOD_DSP_TYPE_MAX，/ *预定义DSP类型的最大数量。 * /
+    FMOD_DSP_TYPE_FORCEINT = 65536 / *确保此枚举已签名32位。 * /
