@@ -1,0 +1,188 @@
+
+#include <iostream>
+using namespace std;
+
+
+/*
+
+ //C++ 异常处理，根据抛出异常数据类型，进入到相应的catch块中
+int main(int argc, const char * argv[]) {
+    try{
+        int a = 300;
+        if (a > 200) {
+            //throw a;
+
+            //char* b = "发生异常";
+            //throw b;
+
+            throw 9.8;
+        }
+    }catch(int a){
+        cout<<"int 异常："<< a << endl;
+
+    }catch(char *b){
+        cout<<"字符异常："<< b <<endl;
+    }catch(...){
+         cout<<"未知异常...."<<endl;
+    }
+    return 0;
+}
+
+*/
+
+
+/*
+
+//throw 抛出函数外
+void func0(int a, int b){
+    if (b == 0) {
+        char* b = "参数不能为 0 ！";
+        throw b;
+    }
+
+
+}
+
+void func1(){
+    try {
+        func0(9, 0);
+    } catch (char* b) {
+        throw b;
+    }
+
+}
+
+
+int main(int argc, const char * argv[]) {
+    try{
+        func1();
+
+    }catch(char *b){
+        cout<<"字符异常："<< b <<endl;
+    }catch(...){
+        cout<<"未知异常...."<<endl;
+    }
+    return 0;
+}
+
+
+*/
+
+
+/*
+//异常类
+class MyException{
+
+};
+
+void func0(int a, int b){
+    if (b == 0 || a == 0) {
+
+        throw MyException();
+        //抛出异常指针（动态内存分配）
+        //throw new MyException();
+
+
+    }
+}
+
+int main(int argc, const char * argv[]) {
+    try{
+        func0(0, 0);
+    }catch(MyException &exce){
+        cout<<"MyException引用。。。"<<endl;
+    }
+
+     //会产生对象的副本
+     //catch(MyException exce){
+     //    cout<<"MyException。。。"<<endl;
+     // }
+
+
+    catch(MyException* exce){
+        cout<<"MyException指针"<<endl;
+        delete exce;
+    }
+
+    return 0;
+}
+*/
+
+/*
+
+//throw 声明函数会抛出的异常类型
+void func0(int a, int b)throw (char*, int){
+    if (b == 0 || a == 0) {
+        char* b = "参数不能为 0 ！";
+        throw b;
+    }
+}
+
+ */
+
+/*
+
+class NullPointerException : public exception{
+    public :
+    NullPointerException(string msg):exception(){
+
+    }
+};
+
+
+ //标准异常（类似于JavaNULLPointerException）
+void func0(int a, int b){
+    if (a == 0) {
+        throw invalid_argument("参数不合法。。。");
+    }else if(a > 100 ){
+        throw out_of_range("超出范围。。。");
+    }else if(b == 0){
+        throw NullPointerException("为空");
+    }
+
+}
+
+int main(int argc, const char * argv[]) {
+    try{
+        func0(10,0);
+
+    }catch(out_of_range e0){
+        cout<<"异常："<< e0.what() <<endl;
+    }catch(NullPointerException e1){
+        cout<<"异常："<< e1.what() <<endl;
+    }catch(...){
+        cout<<"未知异常...."<<endl;
+    }
+    return 0;
+}
+
+*/
+
+class Err{
+    public :
+    class MyException{
+        public :
+        MyException(){}
+    };
+
+};
+
+void func0(int a, int b){
+    if (a == 0) {
+        throw Err::MyException();
+    }
+
+}
+
+
+int main(int argc, const char * argv[]) {
+    try{
+        func0(0,0);
+
+    }catch(Err::MyException &e0){
+        cout<<"异常："<<endl;
+    }catch(...){
+        cout<<"未知异常...."<<endl;
+    }
+    return 0;
+}
