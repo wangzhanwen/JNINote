@@ -1,0 +1,168 @@
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+
+//IO 流
+
+/*
+
+//文本输入输出
+int main(int argc, const char * argv[]) {
+    char* filePath ="/Users/wzw/wzwWorkSpace/ecplise_jni_ws/TestFile/IO1.txt";
+
+    //输出流
+    ofstream fout(filePath);
+    //打开失败
+    if (fout.bad()) {
+        cout<<"文件打开失败。。。"<<endl;
+        return 0;
+    }
+
+    fout<<"start\r\n"<<endl;
+    fout<<"Hello World!\r\n"<<endl;
+    fout<<"end"<<endl;
+    fout.close();
+
+    //输入流
+    ifstream fin(filePath);
+    if (fin.bad()) {
+        cout<<"文件打开失败。。。"<<endl;
+        return 0;
+    }
+    char ch;
+    while (fin.get(ch)) {
+        cout<<ch;
+    }
+    fin.close();
+    return 0;
+}
+
+*/
+
+
+/*
+
+ //二进制文件
+int main(int argc, const char * argv[]) {
+    char* src ="/Users/wzw/wzwWorkSpace/ecplise_jni_ws/TestFile/src.jpeg";
+    char* dest ="/Users/wzw/wzwWorkSpace/ecplise_jni_ws/TestFile/dest.jpeg";
+
+    //输入流
+    ifstream fin(src, ios::binary);
+    //输出流
+    ofstream fout(dest, ios::binary);
+
+    if (fin.bad() || fout.bad()) {
+        cout<<"文件打开失败。。。"<<endl;
+        return 0;
+    }
+
+    while (!fin.eof()) {
+        //读取
+        char buff[1024];
+        fin.read(buff, 1024);
+
+        //写入
+        fout.write(buff, 1024);
+    }
+
+    fin.close();
+    fout.close();
+    return 0;
+}
+
+ */
+
+
+/*
+
+//对象持久化
+class Person{
+private :
+    char* name;
+    int  age;
+public :
+    Person(){}
+    Person(char* name, int age){
+        this->name = name;
+        this->age = age;
+    }
+
+    void print(){
+        cout<<"name:" << this->name << endl;
+        cout<<"age:" << this->age << endl;
+
+    }
+
+};
+
+int main(int argc, const char * argv[]) {
+    char*  objPath ="/Users/wzw/wzwWorkSpace/ecplise_jni_ws/TestFile/c_obj.data";
+
+    Person p0("wangxiaoshuai", 21);
+    Person p1("wangxiaomei", 21);
+
+    //输出流
+    ofstream fout(objPath, ios::binary);
+    fout.write((char*)(&p0), sizeof(Person));//指针能够读取到正确的数据，读取内存的长度
+    fout.write((char*)(&p1), sizeof(Person));
+
+    //输入流
+    ifstream fin(objPath, ios::binary);
+    Person tmp;
+    fin.read((char*)(&tmp), sizeof(Person));
+    tmp.print();
+    fin.read((char*)(&tmp), sizeof(Person));
+    tmp.print();
+
+
+    fin.close();
+    fout.close();
+    return 0;
+}
+
+*/
+
+
+/*
+
+// stl standard template library 标准模板库
+#include <string>
+int main(int argc, const char * argv[]) {
+    string str0 = "hello world! ";
+    string str1("I am AI !");
+    string str2 = str0 + str1;
+
+    cout<< str0 <<endl;
+    cout<< str1 <<endl;
+    cout<< str2 <<endl;
+
+    //转c字符串
+    const char* c_str = str2.c_str();
+    cout<< c_str <<endl;
+    return 0;
+}
+
+*/
+
+
+//容器
+#include <vector>
+int main(int argc, const char * argv[]) {
+
+    //动态数组
+    //不需要动态内存分配
+    vector<int> v;
+    v.push_back(10);
+    v.push_back(20);
+    v.push_back(30);
+
+    for(int i = 0; i < v.size(); i++){
+        cout<< v[i] << endl;
+    }
+
+    return 0;
+}

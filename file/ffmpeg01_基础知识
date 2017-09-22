@@ -1,0 +1,44 @@
+封装数据格式： AVI， MKV， MP4，FLV...
+    MPEG2-TS: 不包含文件头，数据大小固定（188 Byte）的TS Packet构成
+    FLV： 包含头文件，数据由大小不固定的Tag构成
+
+
+录像，录音，实质是一个压缩采集到的图像或者音频数据的过程，这个过程又称为编码
+
+播放视频或音频文件，实质是一个解压缩的过程，这个过程又称为解码
+
+视频解码 -> 视频像素数据
+音频解码 -> 音频采样数据
+
+
+编译FFmpeg
+
+1. 云主机
+2. 安装XShell，Xftp
+3. 上传NDK，FFmpeg
+4. 安装Vim  sudo apt-get install vim-gtk
+5. vim配置：
+  vim /etc/vim/vimrc
+    set nu
+    set tabstop
+    set cursorline
+    set ruler
+6. NDK安装
+   解压ndk：
+   chmod 777 -R ndk 给目录权限
+   安装zip工具：
+      sudo apt-get install zip
+      unzip android-ndk-r14b-linux-x86_64.zip
+
+  配置NDK环境变量：
+      cd ~
+      vim ~/.bashrc
+      NDKROOT=/usr/ndk/android-ndk-r14b
+      export PATH=$NDKROOT:$PATH
+  更新环境变量：
+     source ~/.bashrc
+
+7. 解压FFmpeg
+
+8. 编译ffmpeg
+   shell脚本文件
